@@ -1,13 +1,13 @@
+import type { ReactNode } from "react";
+
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="pt-BR">
-      <body style={{ margin: 0 }}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

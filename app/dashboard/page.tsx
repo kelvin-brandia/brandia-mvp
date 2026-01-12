@@ -1,61 +1,60 @@
-'use client'
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { ImageIcon, LogOut } from "lucide-react";
+"use client";
 
-export default function Dashboard() {
-  const used = 12;
-  const limit = 40;
-  const percent = (used / limit) * 100;
+import { useState } from "react";
+
+export default function DashboardPage() {
+  const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleGenerate() {
+    if (!prompt) return;
+    setLoading(true);
+
+    // depois vamos ligar isso à API real
+    setTimeout(() => {
+      setLoading(false);
+      alert("Imagem gerada (mock)");
+    }, 1500);
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <header className="flex justify-between items-center mb-10">
-        <h1 className="text-3xl font-bold">BrandIA</h1>
-        <Button variant="outline"><LogOut className="w-4 h-4 mr-2" />Sair</Button>
-      </header>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-4xl mx-auto space-y-6">
+        <h1 className="text-3xl font-bold text-gray-900">
+          Dashboard BrandIA
+        </h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2">
-          <CardContent className="p-6 space-y-4">
-            <h2 className="text-xl font-semibold flex items-center gap-2">
-              <ImageIcon /> Gerar imagem
-            </h2>
-            <textarea
-              placeholder="Descreva a imagem que você deseja gerar..."
-              className="w-full h-32 border rounded-xl p-4 resize-none focus:outline-none focus:ring-2 focus:ring-black"
-            />
-            <Button className="w-full">Gerar imagem</Button>
-          </CardContent>
-        </Card>
+        <div className="bg-white rounded-xl shadow p-6 space-y-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Descreva a imagem que deseja gerar
+          </label>
 
-        <Card>
-          <CardContent className="p-6 space-y-4">
-            <h2 className="text-lg font-semibold">Seu plano</h2>
-            <p className="text-sm text-gray-500">Plano Básico</p>
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-black"
+            rows={4}
+            placeholder="Ex: Logo minimalista para marca de camisetas..."
+          />
 
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Uso mensal</span>
-                <span>{used}/{limit}</span>
-              </div>
-              <Progress value={percent} />
-            </div>
-
-            <Button variant="outline" className="w-full">Upgrade para Premium</Button>
-          </CardContent>
-        </Card>
-      </div>
-
-      <section className="mt-10">
-        <h2 className="text-xl font-semibold mb-4">Últimas imagens</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[1,2,3,4].map((i) => (
-            <div key={i} className="bg-gray-200 rounded-xl h-40" />
-          ))}
+          <button
+            onClick={handleGenerate}
+            disabled={loading}
+            className="bg-black text-white px-6 py-3 rounded-lg hover:opacity-90 disabled:opacity-50"
+          >
+            {loading ? "Gerando..." : "Gerar imagem"}
+          </button>
         </div>
-      </section>
+
+        <div className="bg-white rounded-xl shadow p-6">
+          <p className="text-sm text-gray-600">
+            Plano: <strong>Básico</strong>
+          </p>
+          <p className="text-sm text-gray-600">
+            Uso mensal: <strong>0 / 40 imagens</strong>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

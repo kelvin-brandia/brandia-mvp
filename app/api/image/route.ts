@@ -1,71 +1,78 @@
+import { createClient } from "../../../lib/supabase";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { createClient } from "../../../lib/supabase";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
 });
 
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY! // IMPORTANTE
+);
+
 export async function POST(req: Request) {
   try {
-    const { prompt } = await req.json();
+    const { prompt, userId } = await req.json();
 
-    const supabase = createClient();
-
-    // usuário logado
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
-    }
-
-    // buscar identidade da marca
-    const { data: company } = await supabase
-      .from("company_profile")
-      .select("*")
-      .eq("user_id", user.id)
-      .single();
-
-    if (!company) {
+    if (!prompt || !userId) {
       return NextResponse.json(
-        { error: "Perfil da marca não configurado" },
+        { error: "Prompt ou usuário inválido" },
         { status: 400 }
       );
     }
 
-    // prompt inteligente
-    const fullPrompt = `
-Crie uma imagem publicitária profissional com base nas informações:
+    // 1️⃣ Buscar perfil do usuário
+    const { data: profile, error } = await supabase
+      .from("profiles")
+      .select("images_used, images_limit")
+      .eq("id", userId)
+      .single();
 
-Nome da marca: ${company.brand_name}
-Estilo da marca: ${company.brand_style}
-Público-alvo: ${company.target_audience}
-Paleta de cores: ${company.color_palette}
-Tipografia: ${company.typography}
+    if (error || !profile) {
+      return NextResponse.json(
+        { error: "Perfil não encontrado" },
+        { status: 404 }
+      );
+    }
 
-Pedido do usuário:
-${prompt}
+    // 2️⃣ Verificar limite
+    if (profile.images_used >= profile.images_limit) {
+      return NextResponse.json(
+        { error: "Limite de imagens atingido" },
+        { status: 403 }
+      );
+    }
 
-A imagem deve ser moderna, coerente com a identidade visual,
-ideal para redes sociais e com aparência profissional.
-    `;
-
+    // 3️⃣ Gerar imagem com OpenAI
     const image = await openai.images.generate({
       model: "gpt-image-1",
-      prompt: fullPrompt,
+      prompt,
       size: "1024x1024",
     });
 
+    const imageUrl = image.data[0].url;
+
+    // 4️⃣ Atualizar contador
+    await supabase
+      .from("profiles")
+      .update({
+        images_used: profile.images_used + 1,
+      })
+      .eq("id", userId);
+
+    // 5️⃣ Retornar imagem
     return NextResponse.json({
-      image: image.data[0].url,
+      imageUrl,
+      remaining:
+        profile.images_limit - (profile.images_used + 1),
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return NextResponse.json(
       { error: "Erro ao gerar imagem" },
       { status: 500 }
     );
   }
 }
+

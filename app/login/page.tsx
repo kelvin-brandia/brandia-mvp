@@ -1,73 +1,73 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { supabase } from "../../lib/supabase";
+import { useState } from 'react'
+import { supabase } from '@/lib/supabase'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  async function handleLogin() {
-    setLoading(true);
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    });
-    setLoading(false);
+    })
 
-    if (error) {
-      alert(error.message);
+    setLoading(false)
+
+    if (!error) {
+      router.push('/dashboard')
     } else {
-      alert("Login realizado com sucesso!");
+      alert(error.message)
     }
   }
 
-  async function handleRegister() {
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    setLoading(false);
-
-    if (error) {
-      alert(error.message);
-    } else {
-      alert("Conta criada! Verifique seu e-mail.");
-    }
+  async function handleGoogleLogin() {
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/dashboard`,
+      },
+    })
   }
 
   return (
-    <main style={{ padding: 40, maxWidth: 400 }}>
-      <h1>Entrar no BrandIA</h1>
+    <div style={{ maxWidth: 400, margin: '100px auto' }}>
+      <h1>BrandIA</h1>
 
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ display: "block", marginBottom: 10, width: "100%" }}
-      />
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-      <input
-        type="password"
-        placeholder="Senha"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{ display: "block", marginBottom: 20, width: "100%" }}
-      />
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-      <button onClick={handleLogin} disabled={loading}>
-        Entrar
+        <button type="submit" disabled={loading}>
+          {loading ? 'Entrando...' : 'Entrar'}
+        </button>
+      </form>
+
+      <hr />
+
+      <button onClick={handleGoogleLogin}>
+        Entrar com Google
       </button>
-
-      <button
-        onClick={handleRegister}
-        disabled={loading}
-        style={{ marginLeft: 10 }}
-      >
-        Criar conta
-      </button>
-    </main>
-  );
+    </div>
+  )
 }

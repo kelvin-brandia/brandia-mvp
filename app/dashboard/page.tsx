@@ -38,6 +38,10 @@ export default function DashboardPage() {
     <div style={{ padding: 40, maxWidth: 700 }}>
       <h1>BrandIA – Gerador de Imagens</h1>
 
+<p style={{ marginTop: 10 }}>
+  Plano: <strong>Básico</strong> — Uso mensal: <strong>23 / 40</strong>
+</p>
+      
       <textarea
         placeholder="Descreva a imagem que deseja gerar"
         value={prompt}

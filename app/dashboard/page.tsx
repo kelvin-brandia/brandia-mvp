@@ -1,108 +1,42 @@
-export default function DashboardPage() {
-  const plan = "Básico";
-  const usedImages = 12;
-  const totalImages = 40;
+import Sidebar from "@/components/Sidebar";
+import UsageCard from "@/components/UsageCard";
 
-  const percent = Math.round((usedImages / totalImages) * 100);
-
+export default function Dashboard() {
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#0F172A",
-        color: "#E5E7EB",
-        padding: "40px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h1 style={{ fontSize: "32px", marginBottom: "8px" }}>
-        BrandIA Dashboard
-      </h1>
+    <div className="flex bg-[#020617] text-[#E5E7EB] min-h-screen">
+      
+      {/* SIDEBAR */}
+      <Sidebar />
 
-      <p style={{ color: "#94A3B8", marginBottom: "32px" }}>
-        Bem-vindo ao seu painel de criação de imagens
-      </p>
+      {/* CONTEÚDO */}
+      <main className="flex-1 p-10">
+        <h1 className="text-3xl font-bold mb-6">
+          Bem-vindo ao BrandIA 🚀
+        </h1>
 
-      {/* PLANO */}
-      <div
-        style={{
-          background: "#020617",
-          padding: "24px",
-          borderRadius: "12px",
-          maxWidth: "420px",
-          marginBottom: "32px",
-        }}
-      >
-        <h2 style={{ marginBottom: "12px" }}>Plano atual</h2>
-
-        <p>
-          <strong>{plan}</strong>
+        <p className="text-[#94A3B8] mb-10">
+          Gere imagens profissionais alinhadas à identidade da sua marca.
         </p>
 
-        <p style={{ marginTop: "8px", fontSize: "14px", color: "#CBD5F5" }}>
-          {usedImages} de {totalImages} imagens usadas
-        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <UsageCard />
 
-        <div
-          style={{
-            width: "100%",
-            height: "10px",
-            background: "#1E293B",
-            borderRadius: "8px",
-            marginTop: "12px",
-          }}
-        >
-          <div
-            style={{
-              width: `${percent}%`,
-              height: "100%",
-              background: "#2563EB",
-              borderRadius: "8px",
-            }}
-          />
+          <div className="border border-[#1E293B] rounded-xl p-6 flex flex-col justify-between">
+            <div>
+              <h3 className="text-lg font-semibold mb-2">
+                Criar nova imagem
+              </h3>
+              <p className="text-[#94A3B8]">
+                Comece a gerar imagens com inteligência artificial.
+              </p>
+            </div>
+
+            <button className="mt-6 px-6 py-3 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] transition text-white font-semibold">
+              Gerar imagem
+            </button>
+          </div>
         </div>
-      </div>
-
-      {/* GERAR IMAGEM */}
-      <div
-        style={{
-          background: "#020617",
-          padding: "24px",
-          borderRadius: "12px",
-          maxWidth: "600px",
-        }}
-      >
-        <h2 style={{ marginBottom: "12px" }}>
-          Gerar imagem com IA
-        </h2>
-
-        <textarea
-          placeholder="Descreva a imagem que deseja gerar..."
-          style={{
-            width: "100%",
-            height: "100px",
-            borderRadius: "8px",
-            border: "none",
-            padding: "12px",
-            resize: "none",
-            marginBottom: "16px",
-          }}
-        />
-
-        <button
-          style={{
-            background: "#2563EB",
-            color: "#fff",
-            padding: "12px 24px",
-            borderRadius: "8px",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Gerar imagem
-        </button>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

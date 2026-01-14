@@ -1,8 +1,9 @@
 import "./globals.css";
+import Header from "@/components/Header";
 
 export const metadata = {
   title: "BrandIA",
-  description: "IA que entende marcas e cria visuais profissionais",
+  description: "Criação de imagens profissionais com IA",
 };
 
 export default function RootLayout({
@@ -12,7 +13,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className="bg-[#020617] text-[#E5E7EB] antialiased">
+      <body className="bg-[#020617] text-[#E5E7EB]">
+        <Header />
         {children}
       </body>
     </html>

@@ -1,9 +1,6 @@
-import Header from "../../components/Header";
-
 export default function LoginPage() {
   return (
     <main className="min-h-screen bg-[#020617] text-[#E5E7EB]">
-      <Header />
 
       <section className="flex items-center justify-center px-6 py-32">
         <div className="w-full max-w-md border border-[#1E293B] rounded-2xl p-10 bg-[#020617]">

@@ -24,6 +24,19 @@ export default function LoginPage() {
           Entrar com Google
         </button>
 
+{/* EMAIL */}
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full mb-4 p-3 rounded-lg bg-[#020617] border border-[#1E293B] focus:border-[#7C3AED] outline-none"
+        />
+
+        <input
+          type="password"
+          placeholder="Senha"
+          className="w-full mb-6 p-3 rounded-lg bg-[#020617] border border-[#1E293B] focus:border-[#7C3AED] outline-none"
+        />
+        
         <button
           onClick={handleLogin}
           className="w-full py-3 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] transition text-white font-semibold"

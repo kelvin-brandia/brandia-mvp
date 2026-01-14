@@ -1,3 +1,5 @@
+import { useAuth } from "@/app/context/AuthContext";
+import { useRouter } from "next/navigation";
 export default function LoginPage() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-[#020617] text-[#E5E7EB] px-6">

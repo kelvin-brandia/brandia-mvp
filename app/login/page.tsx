@@ -35,6 +35,15 @@ export default function LoginPage() {
         <button className="w-full py-3 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] transition font-semibold">
           Entrar
         </button>
+        
+        const { login } = useAuth();
+const router = useRouter();
+
+function handleLogin() {
+  login();
+  router.push("/generate");
+}
+
 
       </div>
     </main>

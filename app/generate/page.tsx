@@ -1,47 +1,83 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { supabase } from '../../lib/supabase'
+import { useState } from "react";
 
 export default function GeneratePage() {
-  const [request, setRequest] = useState('')
-  const [result, setResult] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
 
-  async function handleGenerate() {
-    setLoading(true)
+  function handleGenerate() {
+    if (!prompt) return;
 
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ request }),
-    })
+    setLoading(true);
+    setImage(null);
 
-    const data = await res.json()
-    setResult(data.result)
-    setLoading(false)
+    // Simulação de geração
+    setTimeout(() => {
+      setImage("https://placehold.co/600x600/7C3AED/FFFFFF?text=BrandIA");
+      setLoading(false);
+    }, 2000);
   }
 
   return (
-    <div style={{ maxWidth: 700, margin: '40px auto' }}>
-      <h1>Gerar conteúdo com BrandIA</h1>
+    <main className="min-h-screen bg-[#020617] text-[#E5E7EB] p-10">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+        
+        {/* FORM */}
+        <div>
+          <h1 className="text-3xl font-bold mb-4">
+            Gerar imagem com IA
+          </h1>
 
-      <textarea
-        placeholder="O que você quer criar?"
-        value={request}
-        onChange={(e) => setRequest(e.target.value)}
-        style={{ width: '100%', height: 120 }}
-      />
+          <p className="text-[#94A3B8] mb-8">
+            Descreva a imagem que representa sua marca.
+          </p>
 
-      <button onClick={handleGenerate} disabled={loading}>
-        {loading ? 'Gerando...' : 'Gerar com BrandIA'}
-      </button>
+          <label className="block mb-2 text-sm text-[#94A3B8]">
+            Descrição da imagem
+          </label>
 
-      {result && (
-        <pre style={{ whiteSpace: 'pre-wrap', marginTop: 20 }}>
-          {result}
-        </pre>
-      )}
-    </div>
-  )
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Ex: Logo minimalista para marca de tecnologia, tons roxos..."
+            className="w-full h-32 p-4 rounded-lg bg-[#020617] border border-[#1E293B] focus:outline-none focus:border-[#7C3AED] mb-6"
+          />
+
+          <button
+            onClick={handleGenerate}
+            disabled={loading}
+            className="w-full py-4 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] transition text-white font-semibold disabled:opacity-50"
+          >
+            {loading ? "Gerando imagem..." : "Gerar imagem"}
+          </button>
+        </div>
+
+        {/* PREVIEW */}
+        <div className="flex items-center justify-center border border-[#1E293B] rounded-xl min-h-[400px]">
+          {loading && (
+            <span className="text-[#94A3B8] animate-pulse">
+              Criando sua imagem com IA...
+            </span>
+          )}
+
+          {!loading && image && (
+            <img
+              src={image}
+              alt="Imagem gerada"
+              className="rounded-lg"
+            />
+          )}
+
+          {!loading && !image && (
+            <span className="text-[#94A3B8]">
+              A prévia da imagem aparecerá aqui
+            </span>
+          )}
+        </div>
+
+      </div>
+    </main>
+  );
 }

@@ -50,6 +50,13 @@ export default function LoginPage() {
               Criar conta
             </span>
           </p>
+          <button
+  className="w-full flex items-center justify-center gap-3 py-3 mb-6 rounded-lg border border-[#1E293B] hover:bg-[#020617] transition text-[#E5E7EB]"
+>
+  <img src="/google.svg" alt="Google" className="h-5 w-5" />
+  Entrar com Google
+</button>
+
         </div>
       </section>
     </main>

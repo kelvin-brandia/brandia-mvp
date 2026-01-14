@@ -1,5 +1,9 @@
 import "./globals.css";
-import React from "react";
+
+export const metadata = {
+  title: "BrandIA",
+  description: "IA que entende marcas e cria visuais profissionais",
+};
 
 export default function RootLayout({
   children,
@@ -8,7 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body className="bg-[#020617] text-[#E5E7EB] antialiased">
+        {children}
+      </body>
     </html>
   );
 }

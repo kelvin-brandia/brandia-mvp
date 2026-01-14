@@ -1,32 +1,34 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="w-full border-b border-slate-800">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+    <header className="w-full border-b border-[#1E293B] bg-[#020617]">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
         
-        {/* Logo */}
+        {/* LOGO */}
         <Link href="/" className="flex items-center gap-3">
-          <Image
+          <img
             src="/logo.png"
             alt="BrandIA"
-            width={36}
-            height={36}
+            className="h-8 w-8"
           />
-          <span className="text-xl font-semibold tracking-tight">
-            Brand<span className="text-purple-500">IA</span>
+          <span className="text-xl font-semibold text-[#E5E7EB]">
+            BrandIA
           </span>
         </Link>
 
-        {/* Menu */}
-        <nav className="flex items-center gap-6 text-sm text-slate-300">
-          <Link href="/login" className="hover:text-white transition">
-            Login
+        {/* MENU */}
+        <nav className="flex items-center gap-6">
+          <Link
+            href="/generate"
+            className="text-[#94A3B8] hover:text-white transition"
+          >
+            Gerar imagem
           </Link>
+
           <Link
             href="/login"
-            className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white transition"
+            className="px-5 py-2 rounded-md bg-[#7C3AED] hover:bg-[#6D28D9] transition text-white font-medium"
           >
             Entrar
           </Link>

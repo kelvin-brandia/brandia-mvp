@@ -34,6 +34,10 @@ export default function LoginPage() {
 
         <button className="w-full py-3 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] transition font-semibold">
           Entrar
+          <button onClick={handleLogin} ...>
+  Entrar
+</button>
+
         </button>
         
         const { login } = useAuth();

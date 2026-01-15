@@ -6,6 +6,12 @@ export default function GeneratePage() {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<string | null>(null);
+  const { user, canGenerate, incrementUsage } = useAuth();
+
+  if (!user) {
+  alert("Faça login para gerar imagens");
+  return;
+}
 
   function handleGenerate() {
     if (!prompt) return;
@@ -75,6 +81,24 @@ export default function GeneratePage() {
               A prévia da imagem aparecerá aqui
             </span>
           )}
+        <button
+  disabled={!canGenerate}
+  onClick={() => {
+    incrementUsage();
+    handleGenerate();
+  }}
+  className={`w-full py-4 rounded-lg font-semibold transition ${
+    canGenerate
+      ? "bg-[#7C3AED] hover:bg-[#6D28D9] text-white"
+      : "bg-gray-700 text-gray-400 cursor-not-allowed"
+  }`}
+>
+  {canGenerate
+    ? "Gerar imagem"
+    : "Limite mensal do plano atingido"}
+</button>
+
+          
         </div>
 
       </div>

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
+export const dynamic = "force-dynamic";
 
 export default function LoginPage() {
   const { login } = useAuth();

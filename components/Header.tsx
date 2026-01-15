@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth } from "@/app/context/AuthContext";
 
 export default function Header() {
-  const { isLoggedIn, logout } = useAuth();
+  const { user } = useAuth();
 
   return (
     <header className="flex items-center justify-between px-8 py-6 border-b border-[#1E293B] bg-[#020617]">
@@ -13,6 +13,16 @@ export default function Header() {
         <span className="text-xl font-semibold text-white">BrandIA</span>
       </Link>
 
+      {user && (
+  <div className="text-sm text-[#94A3B8]">
+    Plano <span className="text-white font-medium">
+      {PLANS[user.plan].name}
+    </span>{" "}
+    • {user.imagesUsed}/{PLANS[user.plan].imageLimit}
+  </div>
+)}
+
+      
       <nav className="flex items-center gap-6">
         {!isLoggedIn && (
           <Link

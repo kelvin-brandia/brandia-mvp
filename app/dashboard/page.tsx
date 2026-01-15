@@ -1,5 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import UsageCard from "@/components/UsageCard";
+export const dynamic = "force-dynamic";
 
 export default function Dashboard() {
   return (

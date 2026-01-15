@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
-import { AuthProvider } from "@/app/context/AuthContext";
-
-export const metadata: Metadata = {
-  title: "BrandIA",
-  description: "Crie imagens profissionais para sua marca com IA",
-};
 
 export default function RootLayout({
   children,

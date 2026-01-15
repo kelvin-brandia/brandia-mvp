@@ -10,6 +10,21 @@ export default function Dashboard() {
 
       {/* CONTEÚDO */}
       <main className="flex-1 p-10">
+        {/* STATUS DO PLANO */}
+<div className="mb-10 border border-[#1E293B] rounded-2xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+  <div>
+    <p className="text-sm text-[#94A3B8]">Plano atual</p>
+    <h2 className="text-xl font-semibold">Básico</h2>
+    <p className="text-sm text-[#94A3B8] mt-1">
+      3 de 20 imagens usadas este mês
+    </p>
+  </div>
+
+  <button className="px-6 py-3 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] transition text-white font-medium">
+    Fazer upgrade
+  </button>
+</div>
+
         <h1 className="text-3xl font-bold mb-6">
           Bem-vindo ao BrandIA 🚀
         </h1>

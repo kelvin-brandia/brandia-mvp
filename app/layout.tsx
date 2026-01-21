@@ -1,14 +1,14 @@
-import Providers from "./providers";
+import "./globals.css";
 
-export const dynamic = "force-dynamic";
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="pt-BR">
-      <body>
-        <Providers>
-          {children}
-        </Providers>
+      <body style={{ background: "#0B0B0F" }}>
+        {children}
       </body>
     </html>
   );
